@@ -1,0 +1,41 @@
+{% extends "shop/base.html" %}
+
+{% block title %}About - Ecommerce Shop{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5 about-container">
+  <div class="row">
+    <div class="col-lg-6">
+      <h1 class="mb-4">About Us</h1>
+      <p class="lead">Welcome to Ecommerce Shop, your ultimate destination for all things ecommerce. We're passionate about delivering the best products and services, ensuring your shopping experience is nothing short of exceptional.</p>
+      <p>Since our inception in 2018, we've been on a mission to revolutionize the ecommerce landscape. With a focus on innovation, quality, and customer satisfaction, we've earned the trust of customers worldwide.</p>
+      <p>At Ecommerce Shop, we believe in making online shopping convenient, enjoyable, and secure. Whether you're browsing our extensive catalog or seeking expert assistance, we're here to exceed your expectations every step of the way.</p>
+      <p class="mb-5">Thank you for choosing Ecommerce Shop. We look forward to serving you!</p>
+    </div>
+    <div class="col-lg-6 d-flex align-items-center">
+      <img src="https://via.placeholder.com/600x400" alt="About Us Image" class="img-fluid rounded shadow-lg">
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Additional CSS styling for the About page */
+  .about-container {
+    background-color: #f8f9fa; /* Light background color */
+    min-height: 100vh;
+  }
+
+  .about-container h1 {
+    color: #343a40; /* Dark heading color */
+  }
+
+  .about-container p {
+    color: #6c757d; /* Text color */
+  }
+
+  .about-container img {
+    max-width: 100%;
+    height: auto;
+  }
+</style>
+{% endblock %}

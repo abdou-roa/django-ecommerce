@@ -11,7 +11,7 @@
                   <h4 class="card-title">
                     <a href="{% url "shop:detail" item.slug %}">{{ item.name|title }}</a>
                   </h4>
-                  <h5>Rs. {{ item.price|floatformat:"2" }}</h5>
+                  <h5>Dh. {{ item.price|floatformat:"2" }}</h5>
                   <p class="card-text">{{ item.description }}</p>
                 </div>
                 <div class="card-footer">

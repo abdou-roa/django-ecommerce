@@ -2,185 +2,177 @@
 <html lang="en">
 {% load static %}
 {% load bootstrap4 %}
-  <head>
+<head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <title>{% block title %}Shop Homepage - Bootstrap Template{% endblock %}</title>
+  <title>{% block title %}Shop Homepage - Bootstrap Template{% endblock %}</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="{% static "shop/css/bootstrap.min.css" %}" rel="stylesheet">
+  <!-- Bootstrap core CSS -->
+  <link href="{% static "shop/css/bootstrap.min.css" %}" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="{% static "shop/css/shop-homepage.css" %}" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="{% static "shop/css/shop-homepage.css" %}" rel="stylesheet">
 
-  </head>
+<style>
+  /* Additional CSS styling */
+.navbar-brand {
+  font-size: 24px;
+  color: #fff; /* white color for the brand */
+}
+.navbar-nav .nav-link {
+  font-size: 18px;
+  margin-right: 15px;
+  color: #fff; /* white color for the links */
+}
+.navbar-toggler-icon {
+  background-color: #fff; /* white color for the toggler icon */
+}
+.form-control {
+  border-radius: 20px;
+}
+.btn-primary {
+  border-radius: 20px;
+  background-color: #007bff; /* Bootstrap primary color */
+  border-color: #007bff; /* Bootstrap primary color */
+}
+.btn-primary:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+  border-color: #0056b3; /* Darker shade on hover */
+}
+.btn-success {
+  border-radius: 20px;
+  background-color: #28a745; /* Bootstrap success color */
+  border-color: #28a745; /* Bootstrap success color */
+}
+.btn-success:hover {
+  background-color: #218838; /* Darker shade on hover */
+  border-color: #218838; /* Darker shade on hover */
+}
+.list-group-item {
+  font-size: 18px;
+  border-radius: 20px;
+}
+.card {
+  border-radius: 20px;
+  border: 1px solid #dee2e6; /* Bootstrap card border color */
+}
+.card-footer {
+  border-top: none;
+  background-color: #f8f9fa; /* Bootstrap card footer background color */
+}
+.card-footer small {
+  color: #6c757d; /* Bootstrap card footer text color */
+}
+footer {
+  background-color: #343a40; /* Bootstrap footer background color */
+  color: #fff; /* white color for the text */
+}
 
-  <body>
+</style>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="/">Ecommerce Shop</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url "shop:home" %}">Home
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="https://github.com/hereshem/django-ecommerce">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url "shop:api_products" %}">APIs</a>
-            </li>
-              <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Account</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {% if user.is_authenticated %}
-                            <a class="dropdown-item" href="{% url "shop:signout" %}">Sign Out</a>
-                        {% else %}
-                            <a class="dropdown-item" href="{% url "shop:signin" %}">Sign In</a>
-                            <a class="dropdown-item" href="{% url "shop:signup" %}">Signup</a>
-                        {% endif %}
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{% url "shop:checkout" %}">Checkout</a>
+</head>
 
-                    </div>
-                </li>
-          </ul>
+<body>
 
-            <form class="form-inline my-2 my-lg-0 mr-4" action="{% url 'shop:search' %}">
-                <input class="form-control mr-sm-2" name="q" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
-            </form>
-            <a href="/mycart" class="btn btn-success">🛒{{ request.session.data.count }} Item{{ request.session.data.count|pluralize }}</a>
-        </div>
-      </div>
-    </nav>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="/">CosmeticSA</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url "shop:home" %}">Home
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url "shop:about" %}">About</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Account</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            {% if user.is_authenticated %}
+            <a class="dropdown-item" href="{% url "shop:signout" %}">Sign Out</a>
+            {% else %}
+            <a class="dropdown-item" href="{% url "shop:signin" %}">Sign In</a>
+            <a class="dropdown-item" href="{% url "shop:signup" %}">Signup</a>
+            {% endif %}
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url "shop:checkout" %}">Checkout</a>
 
-    <!-- Page Content -->
-    <div class="container">
-
-      <div class="row">
-
-        <div class="col-lg-3">
-
-          <h1 class="my-4">Ecommerce Shop</h1>
-          <div class="list-group">
-              {% for c in categories %}
-                  <a href="{% url "shop:categories" c.slug %}" class="list-group-item">{{ c.name }}</a>
-              {% endfor %}
-{#            <a href="#" class="list-group-item">Category 1</a>#}
-{#            <a href="#" class="list-group-item">Category 2</a>#}
-{#            <a href="#" class="list-group-item">Category 3</a>#}
           </div>
+        </li>gfv5
+      </ul>
+                        
+      <form class="form-inline my-2 my-lg-0 mr-4" action="{% url 'shop:search' %}">
+        <input class="form-control mr-sm-2" name="q" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+      </form>
+      <a href="/mycart" class="btn btn-icon">🛒{{ request.session.data.count }} Item{{ request.session.data.count|pluralize }}</a>
+    </div>
+  </div>
+</nav>
 
+<!-- Page Content -->
+<div class="container">
+
+  <div class="row">
+
+    <div class="col-lg-3">
+
+      <h1 class="my-4">CosmeticSA</h1>
+      <div class="list-group">
+        {% for c in categories %}
+        <a href="{% url "shop:categories" c.slug %}" class="list-group-item my-1">{{ c.name }}</a>
+        {% endfor %}
+        {#            <a href="#" class="list-group-item">Category 1</a>#}
+        {#            <a href="#" class="list-group-item">Category 2</a>#}
+        {#            <a href="#" class="list-group-item">Category 3</a>#}
+      </div>
+
+    </div>
+    <!-- /.col-lg-3 -->
+
+    <div class="col-lg-9 mt-3">
+      {% bootstrap_messages %}
+      {% block header %}{% endblock %}
+
+
+      {% block content %}
+      <div class="row mt-3">
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">Item One</a>
+              </h4>
+              <h5>$24.99</h5>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+            </div>
+          </div>
         </div>
-        <!-- /.col-lg-3 -->
 
-        <div class="col-lg-9 mt-3">
-        {% bootstrap_messages %}
-{% block header %}{% endblock %}
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">Item Two</a>
+              </h4>
+              <h5>$24.99</h5>
+              <p class="card-text">Lorem ipsum dolor sit amet
 
-
-              {% block content %}
-<div class="row mt-3">
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#">Item One</a>
-                  </h4>
-                  <h5>$24.99</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#">Item Two</a>
-                  </h4>
-                  <h5>$24.99</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor sit amet.</p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#">Item Three</a>
-                  </h4>
-                  <h5>$24.99</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#">Item Four</a>
-                  </h4>
-                  <h5>$24.99</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#">Item Five</a>
-                  </h4>
-                  <h5>$24.99</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor sit amet.</p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#">Item Six</a>
-                  </h4>
-                  <h5>$24.99</h5>
                   <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
                 </div>
                 <div class="card-footer">
@@ -206,7 +198,7 @@
     <!-- Footer -->
     <footer class="py-5 bg-dark">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Ecommerce Shop 2018</p>
+        <p class="m-0 text-center text-white">Copyright &copy; Ecommerce Shop 2024</p>
       </div>
       <!-- /.container -->
     </footer>

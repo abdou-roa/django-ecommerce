@@ -1,0 +1,23 @@
+/* styles.css */
+.custom-list-group {
+    background-color: #f8f9fa; /* Light grey background */
+    padding: 10px;
+    border-radius: 8px; /* Rounded corners */
+}
+
+.custom-list-item {
+    color: #007bff; /* Blue text */
+    font-weight: bold;
+    text-decoration: none; /* Remove underline */
+    padding: 8px 15px;
+    margin: 5px 0;
+    display: block;
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 4px; /* Rounded corners */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+.custom-list-item:hover {
+    background-color: #007bff; /* Blue background on hover */
+    color: #ffffff; /* White text on hover */
+}

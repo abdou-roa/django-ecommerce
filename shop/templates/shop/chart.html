@@ -1,0 +1,114 @@
+{% extends "shop/base.html" %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <style>
+        .card:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s;
+        }
+        .card-title a {
+            text-decoration: none;
+            color: #343a40;
+        }
+        .card-title a:hover {
+            color: #007bff;
+        }
+        .card-footer a {
+            color: white;
+        }
+        .quantity-input {
+            width: 60px;
+            text-align: center;
+        }
+        .total-section {
+            margin-top: 20px;
+            padding: 20px;
+            border-top: 1px solid #dee2e6;
+            text-align: right;
+        }
+    </style>
+
+    <div class="container mt-4">
+        <div class="row">
+            {% for item in products %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <a href="#"><img class="card-img-top" src="/media/{{ item.image }}" alt="{{ item.name }}"></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="{% url "shop:detail" item.slug %}">{{ item.name|title }}</a>
+                            </h4>
+                            <h5>Rs. {{ item.price|floatformat:"2" }}</h5>
+                            <p class="card-text">{{ item.description }}</p>
+                            <form method="post" class="add-to-cart-form">
+                                <div class="input-group">
+                                    <input type="number" name="quantity" class="form-control quantity-input" value="1" min="1">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-success" type="submit">Add to Cart</button>
+                                    </div>
+                                </div>
+                                <input type="hidden" class="product-price" value="{{ item.price }}">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Item not available</h4>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="total-section">
+            <h4>Total: Rs. <span id="total-price">{{ cart_total|floatformat:"2" }}</span></h4>
+            <a class="btn btn-primary" id="chekout">Checkout</a>
+        </div>
+    </div>
+
+    <script>
+        quantities = []
+        document.addEventListener('DOMContentLoaded', function () {
+            let totalPriceElement = document.getElementById('total-price');
+            let addToCartForms = document.querySelectorAll('.add-to-cart-form');
+            function updateTotalPrice(amount) {
+                // Remove commas and parse the current total price
+                let currentTotal = parseFloat(totalPriceElement.innerText.replace(/,/g, ''));
+                // Calculate the new total by adding the amount
+                let newTotal = currentTotal + amount;
+                // Update the total price display with the new total
+                totalPriceElement.innerText = newTotal.toFixed(2);
+                const encodedArray = quantities.join(',');
+                paymentURL= "{% url 'shop:checkout' %}?total=" + newTotal.toFixed(2) + `?param=${encodeURIComponent(encodedArray)}`; // Example payment URL with total as a parameter
+                document.getElementById("chekout").setAttribute("href", paymentURL); // Set the href attribute
+            }
+            let numberItems = 0
+            for(let i=0; i<addToCartForms.length; i++){
+                quantities[i]=1
+            }
+            updateTotalPrice(0)
+            addToCartForms.forEach(function (form) {
+                
+                form.addEventListener('submit', function (event) {
+                    event.preventDefault();
+
+                    let quantityInput = form.querySelector('.quantity-input');
+                    let productPrice = parseFloat(form.querySelector('.product-price').value);
+                    let quantity = parseInt(quantityInput.value);
+                    quantities[numberItems]=quantity?quantity:1
+                    numberItems++
+                    let totalAmount = productPrice * quantity - productPrice;
+                    quantities.push(quantity);
+
+                    // Update the total price
+                    updateTotalPrice(totalAmount);
+
+                });
+            });
+        });
+    </script>
+{% endblock %}

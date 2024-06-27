@@ -21,6 +21,9 @@ def home(request):
     context = {"products": products, "categories": categories}
     return render(request, "shop/home.html", context)
 
+def about(request):
+    return render(request, "shop/about.html")
+
 
 def search(request):
     q = request.GET["q"]
@@ -127,18 +130,41 @@ def cart(request, slug):
 
 
 def mycart(request):
-    sess = request.session.get("data", {"items":[]})
-    products = Product.objects.filter(active=True, slug__in=sess["items"])
+    sess = request.session.get("data", {"items": []})
+    cart_item_slugs = sess["items"]
+    products = Product.objects.filter(active=True, slug__in=cart_item_slugs)
+    
+    # Calculate total price
+    cart_total = sum(product.price for product in products)
+    
     categories = Category.objects.filter(active=True)
-    context = {"products": products,
-               "categories": categories,
-               "title": "My Cart"}
-    return render(request, "shop/list.html", context)
+    context = {
+        "products": products,
+        "categories": categories,
+        "title": "My Cart",
+        "cart_total": cart_total,
+    }
+    return render(request, "shop/chart.html", context)
 
 
 def checkout(request):
-    request.session.pop('data', None)
-    return redirect("/")
+    sess = request.session.get("data", {"items": []})
+    cart_item_slugs = sess["items"]
+    products = Product.objects.filter(active=True, slug__in=cart_item_slugs)
+    
+    # Calculate total price
+    cart_total = sum(product.price for product in products)
+    
+    categories = Category.objects.filter(active=True)
+    total = request.GET.get('total')
+    context = {
+        "products": products,
+        "categories": categories,
+        "title": "My Cart",
+        "cart_total": cart_total,
+        "total": total,
+    }
+    return render(request, 'shop/checkout.html', context)
 
 @api_view(['GET'])
 def api_products(request):
